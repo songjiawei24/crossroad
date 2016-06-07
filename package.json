@@ -1,0 +1,21 @@
+{
+  "name": "cross",
+  "version": "1.0.0",
+  "description": "cross road game",
+  "main": "server.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "keywords": [
+    "javascript"
+  ],
+  "author": "Jiawei Song",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  },
+  "repository" :
+  { "type" : "git"
+  , "url" : "https://github.com/songjiawei24/crossroad"
+  }
+}
