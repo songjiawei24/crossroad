@@ -16,6 +16,6 @@
   },
   "repository" :
   { "type" : "git"
-  , "url" : "git remote add origin https://github.com/songjiawei24/crossroad.git"
+  , "url" : "git+https://github.com/songjiawei24/crossroad.git"
   }
 }
