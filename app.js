@@ -11,5 +11,5 @@ app.get('/', function (req, res) {
 });
 
 app.listen(app.get('port'), function() {
-  console.log('cross road game listening on port 3000!');
+  console.log('cross road game listening on port 5000!');
 });

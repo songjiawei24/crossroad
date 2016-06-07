@@ -3,13 +3,12 @@ var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
     this.x = 0;
-    //this.y = 65;
-    this.y = cellInitY + cellHeight * getRandom(0,2);
+    this.y = cellHeight + cellHeight * getRandom(0,numRows-4);
     this.speed = getRandom(minSpeed, maxSpeed);
     this.oob = false; // out of bounds
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
+    this.sprite = 'images/enemy.png';
 };
 
 // Update the enemy's position, required method for game
@@ -23,7 +22,7 @@ Enemy.prototype.update = function(dt) {
     //console.log("Player location: " + px + ", " + py);
     if(this.y == py){
         console.log("same row");
-        if((this.x+cellWidth) > px && this.x < (px+cellWidth)){
+        if(((this.x+cellWidth-cellWidth*0.1) > px) && ((this.x+cellWidth*0.1) < (px+cellWidth))){
             console.log("bug location: " + this.x + ", " + this.y);
             console.log("player location: " + px + ", " + py);
             alert("Game over");
@@ -44,7 +43,7 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, cellWidth, cellHeight);
 };
 
 // Now write your own player class
@@ -54,13 +53,13 @@ var Player = function(){
     this.x = playerInitX;
     this.y = playerInitY;
     // render the image
-    this.sprite = 'images/char-boy.png';
+    this.sprite = 'images/boy.png';
 }
 Player.prototype.update = function(){
     
 }
 Player.prototype.render = function(){ // draw the player
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, cellWidth, cellHeight);
 }
 Player.prototype.checkOob = function(){
     
@@ -78,12 +77,12 @@ Player.prototype.handleInput = function(key){
             //console.log(this.x);   
         }
     }else if(key == 'up'){
-        if(this.y > cellHeight - cellInitY){
+        if(this.y > 0){
             this.y -= cellHeight;
             //console.log(this.y);  
         }
     }else if(key == 'down'){
-        if(this.y < cellInitY + (numRows-2)*cellHeight){
+        if(this.y < cellHeight + (numRows-2)*cellHeight){
             this.y += cellHeight;
             //console.log(this.y);  
         }
@@ -100,7 +99,7 @@ function createEnemy() {
         var e = new Enemy();    
         allEnemies.push(e);
         //console.log(allEnemies);
-    }, 1000);
+    }, 3000/numRows);
 }
 
 var player = new Player();

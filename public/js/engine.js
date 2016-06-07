@@ -120,9 +120,9 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/water-block.png',   // top row
-                'images/stone-block.png',   // middle rows
-                'images/grass-block.png'    // bot 2 rows
+                'images/water.png',   // top row
+                'images/stone.png',   // middle rows
+                'images/grass.png'    // bot 2 rows
             ],
             row, col;
 
@@ -152,7 +152,7 @@ var Engine = (function(global) {
         }
         
         function drawBoard(i){ // draw board using images from rowImages
-            ctx.drawImage(Resources.get(rowImages[i]), col * 101, row * 83);
+            ctx.drawImage(Resources.get(rowImages[i]), col * cellWidth, row * cellHeight, cellWidth, cellHeight);
         }
         
         renderEntities();
@@ -199,11 +199,11 @@ var Engine = (function(global) {
      * all of these images are properly loaded our game will start.
      */
     Resources.load([
-        'images/stone-block.png',
-        'images/water-block.png',
-        'images/grass-block.png',
-        'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/stone.png',
+        'images/water.png',
+        'images/grass.png',
+        'images/enemy.png',
+        'images/boy.png'
     ]);
     Resources.onReady(init);
 
