@@ -2,7 +2,7 @@
   "name": "cross",
   "version": "1.0.0",
   "description": "cross road game",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "test.js"
   },
@@ -16,6 +16,6 @@
   },
   "repository" :
   { "type" : "git"
-  , "url" : "https://github.com/songjiawei24/crossroad"
+  , "url" : "git remote add origin https://github.com/songjiawei24/crossroad.git"
   }
 }
