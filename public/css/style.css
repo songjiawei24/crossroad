@@ -1,3 +1,6 @@
-body {
-    text-align: center;
+.container{
+    margin: 0 auto;
+}
+.component {
+    display: inline-block;
 }

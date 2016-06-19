@@ -22,10 +22,9 @@ Enemy.prototype.update = function(dt) {
     //console.log("Player location: " + px + ", " + py);
     if(this.y == py){
         console.log("same row");
-        if(((this.x+cellWidth-cellWidth*0.1) > px) && ((this.x+cellWidth*0.1) < (px+cellWidth))){
+        if(((this.x+cellWidth-cellWidth*0.2) > px) && ((this.x+cellWidth*0.2) < (px+cellWidth))){
             console.log("bug location: " + this.x + ", " + this.y);
             console.log("player location: " + px + ", " + py);
-            alert("Game over");
             gameover = true;
         }
     }
@@ -65,7 +64,7 @@ Player.prototype.checkOob = function(){
     
 }
 Player.prototype.handleInput = function(key){
-    console.log(key);
+    //console.log(key);
     if(key == 'left'){
         if(this.x > 0){
             this.x -= cellWidth;
@@ -77,9 +76,12 @@ Player.prototype.handleInput = function(key){
             //console.log(this.x);   
         }
     }else if(key == 'up'){
-        if(this.y > 0){
+        if(this.y >= cellHeight){
             this.y -= cellHeight;
-            //console.log(this.y);  
+            //console.log(this.y);
+            if(this.y == 0){
+                gameover = true;
+            }  
         }
     }else if(key == 'down'){
         if(this.y < cellHeight + (numRows-2)*cellHeight){
@@ -87,6 +89,8 @@ Player.prototype.handleInput = function(key){
             //console.log(this.y);  
         }
     }
+    console.log(this.x);
+    console.log(this.y);
 }
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies

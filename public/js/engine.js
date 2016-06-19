@@ -19,15 +19,15 @@ var Engine = (function(global) {
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
-    var doc = global.document,
+    var canvasContainer = document.querySelector("#canvas-container"),
         win = global.window,
-        canvas = doc.createElement('canvas'),
+        canvas = document.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
 
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
-    doc.body.appendChild(canvas);
+    canvasContainer.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -79,10 +79,10 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
+        updateEntities(dt);
         if(gameover == true){
+            alert("game over");
             reset();
-        }else{
-            updateEntities(dt);
         }
         // checkCollisions();
     }
@@ -192,6 +192,7 @@ var Engine = (function(global) {
         gameover = false;
         player.x = playerInitX;
         player.y = playerInitY;
+        allEnemies.length = 0;
     }
 
     /* Go ahead and load all of the images we know we're going to need to
