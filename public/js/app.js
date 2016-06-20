@@ -17,18 +17,6 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    var px = player.x;
-    var py = player.y;
-    //console.log("Player location: " + px + ", " + py);
-    if(this.y == py){
-        console.log("same row");
-        if(((this.x+cellWidth-cellWidth*0.2) > px) && ((this.x+cellWidth*0.2) < (px+cellWidth))){
-            console.log("bug location: " + this.x + ", " + this.y);
-            console.log("player location: " + px + ", " + py);
-            gameover = true;
-        }
-    }
-    
     if(this.x > canvasWidth){
         this.oob = true;
         //console.log(this.oob);
@@ -51,46 +39,52 @@ Enemy.prototype.render = function() {
 var Player = function(){
     this.x = playerInitX;
     this.y = playerInitY;
+    this.diffX = 0;
+    this.diffY = 0;
     // render the image
     this.sprite = 'images/boy.png';
 }
 Player.prototype.update = function(){
-    
+    if(this.diffX != 0){
+        this.x += this.diffX;
+        this.diffX = 0;
+    }
+    if(this.diffY != 0){
+        this.y += this.diffY;
+        this.diffY = 0;
+    }
 }
 Player.prototype.render = function(){ // draw the player
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y, cellWidth, cellHeight);
 }
-Player.prototype.checkOob = function(){
-    
-}
+
 Player.prototype.handleInput = function(key){
     //console.log(key);
     if(key == 'left'){
         if(this.x > 0){
-            this.x -= cellWidth;
+            //this.x -= cellWidth;
+            this.diffX = (-1)*cellWidth;
             //console.log(this.x);   
         }
     }else if(key == 'right'){
         if(this.x < canvasWidth - cellWidth){
-            this.x += cellWidth;
+            //this.x += cellWidth;
+            this.diffX = cellWidth;
             //console.log(this.x);   
         }
     }else if(key == 'up'){
         if(this.y >= cellHeight){
-            this.y -= cellHeight;
+            //this.y -= cellHeight;
+            this.diffY = (-1) * cellHeight;
             //console.log(this.y);
-            if(this.y == 0){
-                gameover = true;
-            }  
         }
     }else if(key == 'down'){
         if(this.y < cellHeight + (numRows-2)*cellHeight){
-            this.y += cellHeight;
+            //this.y += cellHeight;
+            this.diffY = cellHeight;
             //console.log(this.y);  
         }
     }
-    console.log(this.x);
-    console.log(this.y);
 }
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -103,7 +97,7 @@ function createEnemy() {
         var e = new Enemy();    
         allEnemies.push(e);
         //console.log(allEnemies);
-    }, 3000/numRows);
+    }, 3000/numRows*5);
 }
 
 var player = new Player();

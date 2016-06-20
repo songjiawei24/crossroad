@@ -55,7 +55,13 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+        if(gameover == false){
+            win.requestAnimationFrame(main);
+        }else{
+            console.log("game over");
+            return;
+        }
+        
     }
 
     /* This function does some initial setup that should only occur once,
@@ -80,10 +86,6 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        if(gameover == true){
-            alert("game over");
-            reset();
-        }
         // checkCollisions();
     }
 
@@ -101,12 +103,26 @@ var Engine = (function(global) {
                 allEnemies.splice(i,1);
             }else{
                 allEnemies[i].update(dt);
+                checkCollisions(allEnemies[i], player.x, player.y);
             }
         }
-        //allEnemies.forEach(function(enemy) {
-        //    enemy.update(dt);
-        //});
         
+    }
+    // check player enemies collision
+    function checkCollisions(enemy, px, py){
+        if(enemy.y == py){
+            console.log("same row");
+            if(((enemy.x+cellWidth-cellWidth*0.2) > px) && ((enemy.x+cellWidth*0.2) < (px+cellWidth))){
+                console.log("bug location: " + enemy.x + ", " + enemy.y);
+                console.log("player location: " + px + ", " + py);
+                console.log("lose");
+            }
+        }
+    }
+
+    function checkWin(){
+        if(player.y == 0) return true;
+        return false;
     }
 
     /* This function initially draws the "game level", it will then call
@@ -158,16 +174,6 @@ var Engine = (function(global) {
         renderEntities();
     }
     
-    
-    
-    /* Add Play button */
-    function addButtons(){
-        var btn = document.createElement("BUTTON");        // Create a <button> element
-        var t = document.createTextNode("CLICK ME");       // Create a text node
-        btn.appendChild(t);                                // Append the text to <button>
-        document.body.appendChild(btn); 
-    }
-    
     /* This function is called by the render function and is called on each game
      * tick. Its purpose is to then call the render functions you have defined
      * on your enemy and player entities within app.js
@@ -181,6 +187,14 @@ var Engine = (function(global) {
         });
 
         player.render();
+        if(checkWin()){
+            gameover = true;
+            
+            console.log("win");
+            alert("win");
+            console.log(gameover);
+            //reset();
+        }
     }
 
     /* This function does nothing but it could have been a good place to
@@ -207,6 +221,9 @@ var Engine = (function(global) {
         'images/boy.png'
     ]);
     Resources.onReady(init);
+
+    var startBtn = document.querySelector("#start");
+    startBtn.addEventListener("click", init);
 
     /* Assign the canvas' context object to the global variable (the window
      * object when run in a browser) so that developers can use it more easily
